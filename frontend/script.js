@@ -63,8 +63,8 @@ function renderChart(labels, prices, bankName, period) {
             datasets: [{
                 label: `${bankName} Price Forecast (${period})`,
                 data: prices,
-                borderColor: '#2563eb',
-                backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                borderColor: '#ffffffff',
+                backgroundColor: '#d8b4fe',
                 borderWidth: 2,
                 fill: true,
                 tension: 0.4, // Makes line smooth

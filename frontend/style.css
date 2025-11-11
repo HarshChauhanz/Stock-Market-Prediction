@@ -1,76 +1,203 @@
+/* --- Global Theme & Variables --- */
 :root {
-    --primary-color: #2563eb;
-    --bg-color: #f8fafc;
-    --card-bg: #ffffff;
+  --bg-dark: #120a1f; /* Very dark purple background */
+  --bg-light: #241838; /* Lighter purple for cards */
+  --primary-text: #f0e6ff; /* Light lilac text (from your JS) */
+  --secondary-text: #d8b4fe; /* Main lilac accent (from your JS) */
+  --lilac-glow: rgba(216, 180, 254, 0.4); /* Glow for shadows */
+  --grid-color: rgba(255, 255, 255, 0.1); /* Faint grid lines (from your JS) */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: var(--bg-color);
-    color: #1e293b;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  background: linear-gradient(135deg, var(--bg-dark), #1f1235);
+  color: var(--primary-text);
+  margin: 0;
+  padding: 2rem;
+  min-height: 100vh;
 }
 
 .container {
-    max-width: 800px;
-    width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 h1 {
-    text-align: center;
-    color: var(--primary-color);
+  text-align: center;
+  color: var(--secondary-text);
+  text-shadow: 0 0 15px var(--lilac-glow);
+  font-size: 2.5rem;
 }
 
+/* --- Card Styling (for Form & Results) --- */
 .card {
-    background: var(--card-bg);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    margin-bottom: 20px;
+  background: var(--bg-light);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--grid-color);
+  overflow: hidden;
+}
+
+/* --- Form Styling --- */
+#prediction-form {
+  display: grid;
+  grid-template-columns: 1fr; /* Mobile-first: 1 column */
+  gap: 1.5rem;
+}
+
+/* 3-column layout for larger screens */
+@media (min-width: 768px) {
+  #prediction-form {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 .form-group {
-    margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--secondary-text);
 }
 
-select, input, button {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 16px;
-    box-sizing: border-box; /* Prevents padding from increasing width */
+select,
+input[type="date"] {
+  width: 100%;
+  padding: 0.85rem;
+  background: var(--bg-dark);
+  border: 1px solid var(--grid-color);
+  border-radius: 8px;
+  color: var(--primary-text);
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  /* ✨ HOVER/FOCUS TRANSITION */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-button {
-    background-color: var(--primary-color);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.2s;
+/* ✨ HOVER ANIMATION: Inputs */
+select:hover,
+input[type="date"]:hover {
+  border-color: var(--secondary-text);
 }
 
-button:hover {
-    background-color: #1d4ed8;
+/* ✨ FOCUS ANIMATION: Inputs (Glow) */
+select:focus,
+input[type="date"]:focus {
+  border-color: var(--secondary-text);
+  box-shadow: 0 0 10px var(--lilac-glow);
 }
 
-.hidden {
-    display: none;
+/* Fix for date picker icon color in dark mode */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
 }
 
+/* --- Button Styling --- */
+#predict-btn {
+  /* Span all columns */
+  grid-column: 1 / -1;
+
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--bg-dark);
+  background: var(--secondary-text);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: 100%;
+
+  /* ✨ HOVER/FOCUS TRANSITION */
+  transition: transform 0.3s ease, box-shadow 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* ✨ HOVER ANIMATION: Button (Lift and Glow) */
+#predict-btn:not(:disabled):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px var(--lilac-glow);
+  background-color: #e6cfff; /* Brighter lilac */
+}
+
+/* Click effect */
+#predict-btn:not(:disabled):active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px var(--lilac-glow);
+}
+
+/* Disabled state (from your JS) */
+#predict-btn:disabled {
+  background: #4a3d60;
+  color: #8e80a5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* --- Result Section --- */
+#result-section {
+  text-align: center;
+}
+
+#result-section h2 {
+  color: var(--primary-text);
+  text-shadow: none;
+  font-weight: 400;
+}
+
+#result-section p {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+  color: var(--primary-text);
+}
+
+/* The predicted price */
+#res-price {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--secondary-text);
+  text-shadow: 0 0 20px var(--lilac-glow);
+  margin-top: 0.5rem;
+}
+
+/* The date */
+#res-date {
+  font-size: 1.25rem;
+  color: var(--secondary-text);
+  opacity: 0.9;
+}
+
+/* --- Chart Container --- */
 .chart-container {
-    position: relative;
-    height: 400px;
-    width: 100%;
-    margin-top: 20px;
+  position: relative;
+  height: 400px; /* Fixed height for the chart */
+  width: 100%;
+  margin-top: 2.5rem;
+}
+
+/* --- Utility Class (from your JS) --- */
+.hidden {
+  display: none;
 }

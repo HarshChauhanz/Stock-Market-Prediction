@@ -5,14 +5,13 @@ import pandas as pd
 import joblib
 import os
 import datetime as dt
-# Adjust this import if your 'src' folder is one level up
 import sys
 sys.path.append("..") 
 from src.features import create_date_features, get_feature_columns
 
-app = FastAPI() # <--- UVICORN LOOKS FOR THIS LINE
+app = FastAPI()
 
-# Add CORS so frontend can talk to backend
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -21,8 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- UPDATE THIS PATH TO WHERE YOUR MODELS ACTUALLY ARE ---
-# If models are in D:\stock_prediction_project\models, use ".." to go up one level
 MODELS_DIR = "../models/" 
 
 class PredictionRequest(BaseModel):
@@ -39,7 +36,6 @@ def predict_stock(request: PredictionRequest):
     model_path = os.path.join(MODELS_DIR, f"{request.bank_name}_model.pkl")
     
     if not os.path.exists(model_path):
-        # Try looking in local backend folder just in case user put them there
         model_path = os.path.join("models/", f"{request.bank_name}_model.pkl")
         if not os.path.exists(model_path):
              raise HTTPException(status_code=404, detail=f"Model not found at {model_path}")
