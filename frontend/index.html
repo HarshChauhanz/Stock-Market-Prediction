@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Predictor Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 Stock Market Predictor</h1>
+        
+        <div class="card">
+            <form id="prediction-form">
+                <div class="form-group">
+                    <label for="bank-select">Choose Bank:</label>
+                    <select id="bank-select" required>
+                        <option value="">-- Select Bank --</option>
+                        <option value="SBI Dataset">SBI</option>
+                        <option value="HDFCBANK.NS (1)">HDFC</option>
+                        <option value="ICICIBANK.NS">ICICI</option>
+                        <option value="AXISBANK">AXIS BANK</option>
+                        <option value="BAJFINANCE">BAJ FINANCE</option>
+                        <option value="BhartiAirtel">BHARTI AIRTEL</option>
+                        <option value="IDBI.NS_stock_data">IDBI</option>
+                        <option value="IDFCFIRSTB.NS_stock_data">IDFC</option>
+                        <option value="UNIONBANK.NS_stock_data">UNION BANK</option>
+
+
+                        
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="prediction-period">Prediction Type:</label>
+                    <select id="prediction-period" required>
+                        <option value="day">Specific Day</option>
+                        <option value="month">Whole Month Trend</option>
+                        <option value="year">Whole Year Trend</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="prediction-date">Select Date:</label>
+                    <input type="date" id="prediction-date" required>
+                </div>
+
+                <button type="submit" id="predict-btn">Get Prediction</button>
+            </form>
+        </div>
+
+        <div id="result-section" class="card hidden">
+            <h2>Prediction Results</h2>
+            <p id="specific-pred-text">On <span id="res-date"></span>, the predicted closing price is: <strong id="res-price">₹0.00</strong></p>
+            
+            <div class="chart-container">
+                <canvas id="predictionChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
