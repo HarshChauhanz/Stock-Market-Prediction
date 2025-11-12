@@ -12,13 +12,11 @@ form.addEventListener('submit', async (e) => {
     const date = document.getElementById('prediction-date').value;
     const btn = document.getElementById('predict-btn');
 
-    // Show loading state
     btn.textContent = "Predicting...";
     btn.disabled = true;
 
     try {
-        // Call FastAPI Backend
-        // NOTE: Ensure port 8000 matches where your uvicorn is running
+
         const response = await fetch('http://127.0.0.1:8000/predict', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -51,7 +49,6 @@ function displayResults(data) {
 function renderChart(labels, prices, bankName, period) {
     const ctx = document.getElementById('predictionChart').getContext('2d');
     
-    // Destroy previous chart if it exists
     if (myChart) {
         myChart.destroy();
     }
@@ -67,8 +64,8 @@ function renderChart(labels, prices, bankName, period) {
                 backgroundColor: '#d8b4fe',
                 borderWidth: 2,
                 fill: true,
-                tension: 0.4, // Makes line smooth
-                pointRadius: period === 'year' ? 0 : 3 // Hide points for year view to avoid clutter
+                tension: 0.4, 
+                pointRadius: period === 'year' ? 0 : 3 
             }]
         },
         options: {

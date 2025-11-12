@@ -1,30 +1,51 @@
-from sklearn.ensemble import HistGradientBoostingRegressor
-from sklearn.metrics import mean_absolute_error
-from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, r2_score
 import joblib
-import os
 
 def train_model(X, y):
-    """Trains the HistGradientBoostingRegressor."""
-    print("Training model...")
-    # Random state ensures reproducible results
-    model = HistGradientBoostingRegressor(random_state=42)
+    """
+    Trains a Random Forest Regressor model using the given features (X) and target (y).
+    Returns the trained model.
+    """
+    print("Training Random Forest Regressor model...")
+
+    model = RandomForestRegressor(
+        n_estimators=100,   
+    )
+
+   
     model.fit(X, y)
-    print("Training complete.")
+
+    print("Model training completed.")
     return model
 
+
 def evaluate_model(model, X_test, y_test):
-    """Prints basic evaluation metrics."""
+    """
+    Evaluates the trained model using Mean Absolute Error and R2 Score.
+    """
     predictions = model.predict(X_test)
     mae = mean_absolute_error(y_test, predictions)
-    print(f"Model Mean Absolute Error on Test Set: {mae:.2f} INR")
+    r2 = r2_score(y_test, predictions)
 
-def save_model(model, filename='models/stock_price_model.pkl'):
-    """Saves the trained model to disk."""
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    print(f"Mean Absolute Error (MAE): {mae:.2f}")
+    print(f"R2 Score: {r2:.2f}")
+
+    return mae, r2
+
+
+def save_model(model, filename):
+    """
+    Saves the trained model as a .pkl file.
+    """
     joblib.dump(model, filename)
-    print(f"Model saved to {filename}")
+    print(f"Model saved successfully as {filename}")
 
-def load_model(filename='models/stock_price_model.pkl'):
-    """Loads a trained model from disk."""
-    return joblib.load(filename)
+
+def load_model(filename):
+    """
+    Loads a previously saved model from a .pkl file.
+    """
+    model = joblib.load(filename)
+    print(f"Model loaded successfully from {filename}")
+    return model
